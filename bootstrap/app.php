@@ -1,13 +1,13 @@
 <?php
 if (isset($_SERVER['HTTP_HOST']) && str_contains($_SERVER['HTTP_HOST'], 'onrender.com')) {
     $_ENV['DB_CONNECTION'] = 'pgsql';
-    $_ENV['DB_HOST']       = getenv('DB_HOST') ?: 'dpg-d97h4duq1p3s73epjig0-a';
+    $_ENV['DB_HOST']       = 'dpg-d97h4duq1p3s73epjig0-a';
     $_ENV['DB_PORT']       = '5432';
-    $_ENV['DB_DATABASE']   = getenv('DB_DATABASE') ?: 'cms_db_77s9';
-    $_ENV['DB_USERNAME']   = getenv('DB_USERNAME');
-    $_ENV['DB_PASSWORD']   = getenv('DB_PASSWORD');
+    $_ENV['DB_DATABASE']   = 'cms_db_77s9';
+    $_ENV['DB_USERNAME']   = 'cms_db_77s9_user'; // <-- Escriba aquí su usuario real de Render
+    $_ENV['DB_PASSWORD']   = 'AQUÍ_COPIE_Y_PEGUE_SU_CONTRASEÑA_REAL_DE_RENDER'; // <-- Fijo aquí
     
-    // Duplicar en $_SERVER por seguridad, ya que algunos servidores leen de ahí
+    // Duplicar en $_SERVER para evitar fugas
     $_SERVER['DB_CONNECTION'] = 'pgsql';
     $_SERVER['DB_HOST']       = $_ENV['DB_HOST'];
     $_SERVER['DB_PORT']       = '5432';
