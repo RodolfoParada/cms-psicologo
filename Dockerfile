@@ -33,7 +33,6 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 
 # === AGREGAR ESTO PARA LIMPIAR LA CACHÉ DE CONFIGURACIÓN ===
 RUN php artisan config:clear
-RUN php artisan cache:clear
 # ==========================================================
 
 # 7. Exponer el puerto por defecto
