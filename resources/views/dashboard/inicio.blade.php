@@ -51,7 +51,7 @@
     <div class="card">
         <div class="card-header">
             <h2>Próximas citas</h2>
-            <a href="#" class="btn btn-primary btn-sm">
+            <a href="{{ route('citas.crear') }}" class="btn btn-primary btn-sm">
                 <i class="fas fa-plus"></i> Nueva cita
             </a>
         </div>
@@ -91,7 +91,7 @@
     <div class="card">
         <div class="card-header">
             <h2>Últimos pacientes</h2>
-            <a href="#" class="btn btn-outline btn-sm">
+            <a href="{{ route('pacientes.index') }}" class="btn btn-outline btn-sm">
                 <i class="fas fa-users"></i> Ver todos
             </a>
         </div>
@@ -124,11 +124,11 @@
                 <span style="font-size:2.4rem; color:var(--color-success);"><i class="fas fa-clock"></i></span>
                 <span style="font-size:1.3rem; font-weight:500;">Disponibilidad</span>
             </a>
-            <a href="#" style="display:flex; flex-direction:column; align-items:center; gap:0.8rem; padding:1.6rem; border:0.1rem solid var(--color-border); border-radius:var(--radius); transition:all 0.2s;">
+            <a href="{{ route('temas.index') }}" style="display:flex; flex-direction:column; align-items:center; gap:0.8rem; padding:1.6rem; border:0.1rem solid var(--color-border); border-radius:var(--radius); transition:all 0.2s;">
                 <span style="font-size:2.4rem; color:var(--color-warning);"><i class="fas fa-paint-roller"></i></span>
                 <span style="font-size:1.3rem; font-weight:500;">Temas</span>
             </a>
-            <a href="#" style="display:flex; flex-direction:column; align-items:center; gap:0.8rem; padding:1.6rem; border:0.1rem solid var(--color-border); border-radius:var(--radius); transition:all 0.2s;">
+            <a href="{{ route('configuracion-web.index') }}" style="display:flex; flex-direction:column; align-items:center; gap:0.8rem; padding:1.6rem; border:0.1rem solid var(--color-border); border-radius:var(--radius); transition:all 0.2s;">
                 <span style="font-size:2.4rem; color:var(--color-danger);"><i class="fas fa-cog"></i></span>
                 <span style="font-size:1.3rem; font-weight:500;">Configuración</span>
             </a>

@@ -1,16 +1,28 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\BuscadorController;
+use App\Http\Controllers\AyudaController;
 use App\Http\Controllers\CalendarioController;
 use App\Http\Controllers\CategoriaBlogController;
 use App\Http\Controllers\CitasController;
+use App\Http\Controllers\ConfiguracionWebController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DisponibilidadController;
+use App\Http\Controllers\FaqController;
+use App\Http\Controllers\FrasesPublicasController;
 use App\Http\Controllers\HistoriasController;
+use App\Http\Controllers\ImagenesController;
 use App\Http\Controllers\InstalacionController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\NotificacionesController;
 use App\Http\Controllers\PacientesController;
+use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\ProteccionDatosController;
+use App\Http\Controllers\RedesSocialesController;
+use App\Http\Controllers\ReservasController;
+use App\Http\Controllers\TemasController;
+use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('instalacion')->group(function () {
@@ -91,8 +103,56 @@ Route::middleware('auth.psicologa')->prefix('panel-psicologa')->group(function (
     Route::post('/disponibilidad/vacaciones/toggle', [DisponibilidadController::class, 'toggleModoVacaciones'])->name('disponibilidad.vacaciones.toggle');
     Route::post('/disponibilidad/vacaciones', [DisponibilidadController::class, 'guardarVacaciones'])->name('disponibilidad.vacaciones.guardar');
     Route::delete('/disponibilidad/vacaciones/{id}', [DisponibilidadController::class, 'eliminarVacaciones'])->name('disponibilidad.vacaciones.eliminar');
+
+    Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+    Route::post('/faq', [FaqController::class, 'store'])->name('faq.store');
+    Route::put('/faq/{id}', [FaqController::class, 'update'])->name('faq.update');
+    Route::delete('/faq/{id}', [FaqController::class, 'destroy'])->name('faq.destroy');
+    Route::post('/faq/{id}/toggle', [FaqController::class, 'toggle'])->name('faq.toggle');
+
+    Route::get('/configuracion-web', [ConfiguracionWebController::class, 'index'])->name('configuracion-web.index');
+    Route::post('/configuracion-web', [ConfiguracionWebController::class, 'guardar'])->name('configuracion-web.guardar');
+
+    Route::get('/temas', [TemasController::class, 'index'])->name('temas.index');
+    Route::post('/temas/seleccionar', [TemasController::class, 'seleccionar'])->name('temas.seleccionar');
+
+    Route::get('/imagenes', [ImagenesController::class, 'index'])->name('imagenes.index');
+    Route::post('/imagenes/subir', [ImagenesController::class, 'subir'])->name('imagenes.subir');
+    Route::delete('/imagenes/{clave}', [ImagenesController::class, 'eliminar'])->name('imagenes.eliminar');
+
+    Route::post('/dashboard-tema', [ConfiguracionWebController::class, 'guardarDashboardTema'])->name('dashboard.tema.guardar');
+
+    Route::get('/frases-publicas', [FrasesPublicasController::class, 'index'])->name('frases-publicas.index');
+    Route::post('/frases-publicas', [FrasesPublicasController::class, 'guardar'])->name('frases-publicas.guardar');
+    Route::post('/frases-publicas/restablecer/{clave}', [FrasesPublicasController::class, 'restablecer'])->name('frases-publicas.restablecer');
+
+    Route::get('/redes-sociales', [RedesSocialesController::class, 'index'])->name('redes-sociales.index');
+    Route::post('/redes-sociales', [RedesSocialesController::class, 'guardar'])->name('redes-sociales.guardar');
+
+    Route::get('/notificaciones', [NotificacionesController::class, 'index'])->name('notificaciones.index');
+    Route::post('/notificaciones', [NotificacionesController::class, 'guardar'])->name('notificaciones.guardar');
+
+    Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil.index');
+    Route::post('/perfil', [PerfilController::class, 'actualizar'])->name('perfil.actualizar');
+
+    Route::get('/ayuda', [AyudaController::class, 'index'])->name('ayuda.index');
+
+    Route::get('/buscar', [BuscadorController::class, 'buscar'])->name('buscador.buscar');
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/previsualizar-tema/{id}', [TemasController::class, 'previsualizar'])->name('temas.previsualizar');
+
+// Public web routes
+Route::get('/', [WebController::class, 'index'])->name('web.index');
+Route::get('/sobre-mi', [WebController::class, 'sobreMi'])->name('web.sobre-mi');
+Route::get('/servicios', [WebController::class, 'servicios'])->name('web.servicios');
+Route::get('/blog', [WebController::class, 'blog'])->name('web.blog');
+Route::get('/blog/{slug}', [WebController::class, 'blogArticulo'])->name('web.blog.articulo');
+Route::get('/preguntas-frecuentes', [WebController::class, 'faq'])->name('web.faq');
+Route::get('/contacto', [WebController::class, 'contacto'])->name('web.contacto');
+
+// Public booking routes
+Route::get('/reservar', [ReservasController::class, 'index'])->name('reservas.index');
+Route::get('/api/reservas/slots', [ReservasController::class, 'slots'])->name('reservas.slots');
+Route::get('/api/reservas/calendario', [ReservasController::class, 'calendario'])->name('reservas.calendario');
+Route::post('/reservar', [ReservasController::class, 'store'])->name('reservas.store');

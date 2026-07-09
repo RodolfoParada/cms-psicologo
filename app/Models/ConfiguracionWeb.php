@@ -25,6 +25,8 @@ class ConfiguracionWeb extends Model
         'mostrar_especialidades',
         'mostrar_servicios',
         'mostrar_testimonios',
+        'dashboard_tema',
+        'dashboard_color',
     ];
 
     protected function casts(): array

@@ -29,4 +29,10 @@ class Paciente extends Model
     {
         return $this->belongsTo(Psicologa::class);
     }
+
+    public function citas()
+    {
+        return $this->hasMany(Cita::class, 'paciente_telefono', 'telefono')
+            ->where('psicologa_id', $this->psicologa_id);
+    }
 }

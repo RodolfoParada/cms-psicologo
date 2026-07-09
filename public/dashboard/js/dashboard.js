@@ -88,4 +88,101 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
+
+    // === DASHBOARD THEME ===
+    const dashboard = document.querySelector('.dashboard');
+    const themeModal = document.getElementById('themeModal');
+    const themeBtn = document.getElementById('btn-tema');
+    const themeClose = document.getElementById('themeModalClose');
+    const themeOptions = document.querySelectorAll('.theme-option');
+    const colorSwatches = document.querySelectorAll('.color-swatch');
+    const saveThemeBtn = document.getElementById('saveThemeBtn');
+
+    let selectedTheme = dashboard ? dashboard.getAttribute('data-dashboard-theme') || 'claro' : 'claro';
+    let selectedColor = dashboard ? dashboard.getAttribute('data-dashboard-color') || '#4a7cc4' : '#4a7cc4';
+
+    // Apply theme to dashboard
+    function applyTheme(theme, color) {
+        if (dashboard) {
+            dashboard.setAttribute('data-dashboard-theme', theme);
+            dashboard.setAttribute('data-dashboard-color', color);
+        }
+        document.documentElement.style.setProperty('--accent', color);
+        document.documentElement.style.setProperty('--color-primary', color);
+    }
+
+    // Theme modal
+    if (themeBtn && themeModal) {
+        themeBtn.addEventListener('click', function () {
+            themeModal.classList.add('open');
+            resetModalSelection();
+        });
+    }
+
+    if (themeClose && themeModal) {
+        themeClose.addEventListener('click', function () {
+            themeModal.classList.remove('open');
+        });
+        themeModal.addEventListener('click', function (e) {
+            if (e.target === this) themeModal.classList.remove('open');
+        });
+    }
+
+    function resetModalSelection() {
+        themeOptions.forEach(function (opt) {
+            opt.classList.toggle('selected', opt.dataset.themeValue === selectedTheme);
+        });
+        colorSwatches.forEach(function (sw) {
+            sw.classList.toggle('selected', sw.dataset.color === selectedColor);
+        });
+    }
+
+    // Theme option click
+    themeOptions.forEach(function (opt) {
+        opt.addEventListener('click', function () {
+            themeOptions.forEach(function (o) { o.classList.remove('selected'); });
+            this.classList.add('selected');
+            selectedTheme = this.dataset.themeValue;
+        });
+    });
+
+    // Color swatch click
+    colorSwatches.forEach(function (sw) {
+        sw.addEventListener('click', function () {
+            colorSwatches.forEach(function (s) { s.classList.remove('selected'); });
+            this.classList.add('selected');
+            selectedColor = this.dataset.color;
+        });
+    });
+
+    // Save theme
+    if (saveThemeBtn) {
+        saveThemeBtn.addEventListener('click', function () {
+            applyTheme(selectedTheme, selectedColor);
+
+            // Persist to server
+            fetch('/panel-psicologa/dashboard-tema', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    dashboard_tema: selectedTheme,
+                    dashboard_color: selectedColor
+                })
+            }).then(function (r) { return r.json(); })
+              .then(function (data) {
+                  if (data.success) {
+                      themeModal.classList.remove('open');
+                  }
+              });
+        });
+    }
+
+    // Apply saved theme on load
+    if (selectedColor) {
+        document.documentElement.style.setProperty('--accent', selectedColor);
+        document.documentElement.style.setProperty('--color-primary', selectedColor);
+    }
 });

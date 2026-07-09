@@ -7,6 +7,7 @@ use App\Models\Especialidad;
 use App\Models\Precio;
 use App\Models\Psicologa;
 use App\Models\Servicio;
+use App\Models\Tema;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -137,21 +138,14 @@ class InstalacionController extends Controller
 
     public function paso7()
     {
-        $temas = [
-            ['id' => 1, 'nombre' => 'Tema Base', 'descripcion' => 'Diseño clásico y profesional en tonos tierra'],
-            ['id' => 2, 'nombre' => 'Tema Naturaleza', 'descripcion' => 'Tonos verdes y azules, estilo natural'],
-            ['id' => 3, 'nombre' => 'Tema Lavanda', 'descripcion' => 'Tonos morados suaves, estilo relajante'],
-            ['id' => 4, 'nombre' => 'Tema Océano', 'descripcion' => 'Tonos azules profundos, estilo sereno'],
-            ['id' => 5, 'nombre' => 'Tema Rosa', 'descripcion' => 'Tonos rosados, estilo cálido y acogedor'],
-        ];
-
+        $temas = Tema::where('activo', true)->get();
         return view('instalacion.paso7', compact('temas'));
     }
 
     public function completar(Request $request)
     {
         $request->validate([
-            'tema_id' => 'required|integer|between:1,5',
+            'tema_id' => 'required|exists:temas,id',
         ]);
 
         $dataPaso1 = session('instalacion.paso1');
