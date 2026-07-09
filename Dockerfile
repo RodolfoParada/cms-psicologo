@@ -31,9 +31,11 @@ RUN composer install --no-interaction --optimize-autoloader --no-dev
 # 6. Permisos correctos para que Laravel pueda escribir logs y caché
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# === AGREGAR ESTO PARA LIMPIAR LA CACHÉ DE CONFIGURACIÓN ===
-RUN php artisan config:clear
-# ==========================================================
+# 7. Script de arranque: limpia config y ejecuta migraciones antes de servir la app
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# 7. Exponer el puerto por defecto
+# 8. Exponer el puerto por defecto
 EXPOSE 80
+
+ENTRYPOINT ["docker-entrypoint.sh"]
