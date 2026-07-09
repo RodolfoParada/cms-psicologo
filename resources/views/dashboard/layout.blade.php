@@ -37,7 +37,7 @@
                         <span class="icon"><i class="fas fa-chart-pie"></i></span>
                         Inicio
                     </a>
-                    <a href="#" class="nav-item">
+                    <a href="{{ route('citas.index') }}" class="nav-item {{ request()->routeIs('citas*') ? 'active' : '' }}">
                         <span class="icon"><i class="fas fa-calendar-check"></i></span>
                         Citas
                     </a>
@@ -71,7 +71,7 @@
                         Configuración <span class="arrow"><i class="fas fa-chevron-right"></i></span>
                     </div>
                     <div class="nav-children">
-                        <a href="#" class="nav-item-child">Disponibilidad</a>
+                        <a href="{{ route('disponibilidad.index') }}" class="nav-item-child {{ request()->routeIs('disponibilidad*') ? 'active' : '' }}">Disponibilidad</a>
                         <a href="#" class="nav-item-child">Temas visuales</a>
                         <a href="#" class="nav-item-child">Imágenes</a>
                         <a href="#" class="nav-item-child">Frases públicas</a>

@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CitasController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DisponibilidadController;
 use App\Http\Controllers\InstalacionController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
@@ -26,9 +29,22 @@ Route::post('/acceso-psicologa', [LoginController::class, 'login'])->name('login
 Route::post('/cerrar-sesion', [LoginController::class, 'logout'])->name('logout.psicologa');
 
 Route::middleware('auth.psicologa')->prefix('panel-psicologa')->group(function () {
-    Route::get('/', function () {
-        return view('dashboard.inicio');
-    })->name('dashboard.inicio');
+    Route::get('/', [DashboardController::class, 'inicio'])->name('dashboard.inicio');
+
+    Route::get('/citas', [CitasController::class, 'index'])->name('citas.index');
+    Route::get('/citas/crear', [CitasController::class, 'crear'])->name('citas.crear');
+    Route::post('/citas', [CitasController::class, 'guardar'])->name('citas.guardar');
+    Route::get('/citas/{id}/editar', [CitasController::class, 'editar'])->name('citas.editar');
+    Route::put('/citas/{id}', [CitasController::class, 'actualizar'])->name('citas.actualizar');
+    Route::delete('/citas/{id}', [CitasController::class, 'eliminar'])->name('citas.eliminar');
+    Route::post('/citas/{id}/estado', [CitasController::class, 'cambiarEstado'])->name('citas.estado');
+
+    Route::get('/disponibilidad', [DisponibilidadController::class, 'index'])->name('disponibilidad.index');
+    Route::post('/disponibilidad/descanso', [DisponibilidadController::class, 'guardarDescanso'])->name('disponibilidad.descanso.guardar');
+    Route::post('/disponibilidad/horarios', [DisponibilidadController::class, 'guardarHorarios'])->name('disponibilidad.horarios.guardar');
+    Route::post('/disponibilidad/vacaciones/toggle', [DisponibilidadController::class, 'toggleModoVacaciones'])->name('disponibilidad.vacaciones.toggle');
+    Route::post('/disponibilidad/vacaciones', [DisponibilidadController::class, 'guardarVacaciones'])->name('disponibilidad.vacaciones.guardar');
+    Route::delete('/disponibilidad/vacaciones/{id}', [DisponibilidadController::class, 'eliminarVacaciones'])->name('disponibilidad.vacaciones.eliminar');
 });
 
 Route::get('/', function () {
