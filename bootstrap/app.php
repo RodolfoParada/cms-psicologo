@@ -1,17 +1,19 @@
 <?php
 if (isset($_SERVER['HTTP_HOST']) && str_contains($_SERVER['HTTP_HOST'], 'onrender.com')) {
-    // Forzar a Laravel a leer los valores frescos del entorno de Render en tiempo de ejecución
-    $host = getenv('DB_HOST') ?: 'dpg-d97h4duq1p3s73epjig0-a';
-    $db   = getenv('DB_DATABASE') ?: 'cms_db_77s9';
-    $user = getenv('DB_USERNAME');
-    $pass = getenv('DB_PASSWORD');
-
-    config([
-        'database.connections.pgsql.host'     => $host,
-        'database.connections.pgsql.database' => $db,
-        'database.connections.pgsql.username' => $user,
-        'database.connections.pgsql.password' => $pass,
-    ]);
+    $_ENV['DB_CONNECTION'] = 'pgsql';
+    $_ENV['DB_HOST']       = getenv('DB_HOST') ?: 'dpg-d97h4duq1p3s73epjig0-a';
+    $_ENV['DB_PORT']       = '5432';
+    $_ENV['DB_DATABASE']   = getenv('DB_DATABASE') ?: 'cms_db_77s9';
+    $_ENV['DB_USERNAME']   = getenv('DB_USERNAME');
+    $_ENV['DB_PASSWORD']   = getenv('DB_PASSWORD');
+    
+    // Duplicar en $_SERVER por seguridad, ya que algunos servidores leen de ahí
+    $_SERVER['DB_CONNECTION'] = 'pgsql';
+    $_SERVER['DB_HOST']       = $_ENV['DB_HOST'];
+    $_SERVER['DB_PORT']       = '5432';
+    $_SERVER['DB_DATABASE']   = $_ENV['DB_DATABASE'];
+    $_SERVER['DB_USERNAME']   = $_ENV['DB_USERNAME'];
+    $_SERVER['DB_PASSWORD']   = $_ENV['DB_PASSWORD'];
 }
 
 
