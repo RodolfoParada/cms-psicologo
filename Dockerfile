@@ -31,5 +31,10 @@ RUN composer install --no-interaction --optimize-autoloader --no-dev
 # 6. Permisos correctos para que Laravel pueda escribir logs y caché
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
+# === AGREGAR ESTO PARA LIMPIAR LA CACHÉ DE CONFIGURACIÓN ===
+RUN php artisan config:clear
+RUN php artisan cache:clear
+# ==========================================================
+
 # 7. Exponer el puerto por defecto
 EXPOSE 80
