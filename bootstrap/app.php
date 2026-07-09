@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'instalacion' => \App\Http\Middleware\InstalacionMiddleware::class,
+            'auth.psicologa' => \App\Http\Middleware\AuthPsicologaMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

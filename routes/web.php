@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InstalacionController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('instalacion')->group(function () {
@@ -18,6 +19,16 @@ Route::middleware('instalacion')->group(function () {
     Route::post('/instalar/paso6', [InstalacionController::class, 'paso6Post'])->name('instalacion.paso6.post');
     Route::get('/instalar/paso7', [InstalacionController::class, 'paso7'])->name('instalacion.paso7');
     Route::post('/instalar/completar', [InstalacionController::class, 'completar'])->name('instalacion.completar');
+});
+
+Route::get('/acceso-psicologa', [LoginController::class, 'showLoginForm'])->name('login.psicologa');
+Route::post('/acceso-psicologa', [LoginController::class, 'login'])->name('login.psicologa.post');
+Route::post('/cerrar-sesion', [LoginController::class, 'logout'])->name('logout.psicologa');
+
+Route::middleware('auth.psicologa')->prefix('panel-psicologa')->group(function () {
+    Route::get('/', function () {
+        return view('dashboard.inicio');
+    })->name('dashboard.inicio');
 });
 
 Route::get('/', function () {
