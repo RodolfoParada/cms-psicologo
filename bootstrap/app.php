@@ -1,10 +1,19 @@
 <?php
 if (isset($_SERVER['HTTP_HOST']) && str_contains($_SERVER['HTTP_HOST'], 'onrender.com')) {
-    $cacheFile = __DIR__ . '/../bootstrap/cache/config.php';
-    if (file_exists($cacheFile)) {
-        @unlink($cacheFile);
-    }
+    // Forzar a Laravel a leer los valores frescos del entorno de Render en tiempo de ejecución
+    $host = getenv('DB_HOST') ?: 'dpg-d97h4duq1p3s73epjig0-a';
+    $db   = getenv('DB_DATABASE') ?: 'cms_db_77s9';
+    $user = getenv('DB_USERNAME');
+    $pass = getenv('DB_PASSWORD');
+
+    config([
+        'database.connections.pgsql.host'     => $host,
+        'database.connections.pgsql.database' => $db,
+        'database.connections.pgsql.username' => $user,
+        'database.connections.pgsql.password' => $pass,
+    ]);
 }
+
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
