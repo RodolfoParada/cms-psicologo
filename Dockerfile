@@ -1,15 +1,16 @@
 FROM php:8.3-apache
 
-# 1. Instalar dependencias del sistema y extensiones PHP necesarias
+# 1. Instalar dependencias del sistema y extensiones PHP necesarias (Agregado libpq-dev y pdo_pgsql)
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
     libzip-dev \
+    libpq-dev \
     unzip \
     git \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd zip pdo pdo_mysql bcmath
+    && docker-php-ext-install gd zip pdo pdo_mysql pdo_pgsql bcmath
 
 # 2. Habilitar el módulo de reescritura de Apache (Crucial para las rutas de Laravel)
 RUN a2enmod rewrite
