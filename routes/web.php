@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CalendarioController;
+use App\Http\Controllers\CategoriaBlogController;
 use App\Http\Controllers\CitasController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DisponibilidadController;
@@ -44,6 +46,19 @@ Route::middleware('auth.psicologa')->prefix('panel-psicologa')->group(function (
     Route::post('/calendario/citas', [CalendarioController::class, 'store'])->name('calendario.citas.store');
     Route::put('/calendario/citas/{id}', [CalendarioController::class, 'update'])->name('calendario.citas.update');
     Route::delete('/calendario/citas/{id}', [CalendarioController::class, 'destroy'])->name('calendario.citas.destroy');
+
+    Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('/blog/crear', [BlogController::class, 'crear'])->name('blog.crear');
+    Route::post('/blog', [BlogController::class, 'guardar'])->name('blog.guardar');
+    Route::get('/blog/{id}/editar', [BlogController::class, 'editar'])->name('blog.editar');
+    Route::put('/blog/{id}', [BlogController::class, 'actualizar'])->name('blog.actualizar');
+    Route::delete('/blog/{id}', [BlogController::class, 'eliminar'])->name('blog.eliminar');
+    Route::post('/blog/{id}/toggle', [BlogController::class, 'togglePublicado'])->name('blog.toggle');
+
+    Route::get('/blog/categorias', [CategoriaBlogController::class, 'index'])->name('blog.categorias');
+    Route::post('/blog/categorias', [CategoriaBlogController::class, 'store'])->name('blog.categorias.store');
+    Route::put('/blog/categorias/{id}', [CategoriaBlogController::class, 'update'])->name('blog.categorias.update');
+    Route::delete('/blog/categorias/{id}', [CategoriaBlogController::class, 'destroy'])->name('blog.categorias.destroy');
 
     Route::get('/disponibilidad', [DisponibilidadController::class, 'index'])->name('disponibilidad.index');
     Route::post('/disponibilidad/descanso', [DisponibilidadController::class, 'guardarDescanso'])->name('disponibilidad.descanso.guardar');

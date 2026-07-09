@@ -62,8 +62,8 @@
                         Contenido web <span class="arrow"><i class="fas fa-chevron-right"></i></span>
                     </div>
                     <div class="nav-children">
-                        <a href="#" class="nav-item-child">Blog</a>
-                        <a href="#" class="nav-item-child">Categorías blog</a>
+                        <a href="{{ route('blog.index') }}" class="nav-item-child {{ request()->routeIs('blog*') && !request()->routeIs('blog.categorias*') ? 'active' : '' }}">Blog</a>
+                        <a href="{{ route('blog.categorias') }}" class="nav-item-child {{ request()->routeIs('blog.categorias*') ? 'active' : '' }}">Categorías blog</a>
                         <a href="#" class="nav-item-child">Preguntas frecuentes</a>
                         <a href="#" class="nav-item-child">Servicios</a>
                         <a href="#" class="nav-item-child">Especialidades</a>
