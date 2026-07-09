@@ -1,6 +1,9 @@
 <?php
 if (isset($_SERVER['HTTP_HOST']) && str_contains($_SERVER['HTTP_HOST'], 'onrender.com')) {
-    \Illuminate\Support\Facades\Artisan::call('config:clear');
+    $cacheFile = __DIR__ . '/../bootstrap/cache/config.php';
+    if (file_exists($cacheFile)) {
+        @unlink($cacheFile);
+    }
 }
 
 use Illuminate\Foundation\Application;
