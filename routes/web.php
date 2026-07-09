@@ -156,3 +156,14 @@ Route::get('/reservar', [ReservasController::class, 'index'])->name('reservas.in
 Route::get('/api/reservas/slots', [ReservasController::class, 'slots'])->name('reservas.slots');
 Route::get('/api/reservas/calendario', [ReservasController::class, 'calendario'])->name('reservas.calendario');
 Route::post('/reservar', [ReservasController::class, 'store'])->name('reservas.store');
+
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/ejecutar-migracion-secreta', function () {
+    try {
+        Artisan::call('migrate', ['--force' => true]);
+        return '¡Tablas creadas con éxito en PostgreSQL, mi señor!';
+    } catch (\Exception $e) {
+        return 'Hubo un error: ' . $e->getMessage();
+    }
+});
