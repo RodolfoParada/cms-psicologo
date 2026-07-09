@@ -14,7 +14,27 @@ if (isset($_SERVER['HTTP_HOST']) && str_contains($_SERVER['HTTP_HOST'], 'onrende
     $_SERVER['DB_DATABASE']   = $_ENV['DB_DATABASE'];
     $_SERVER['DB_USERNAME']   = $_ENV['DB_USERNAME'];
     $_SERVER['DB_PASSWORD']   = $_ENV['DB_PASSWORD'];
+
+    // === INTERCEPTOR MÁGICO PARA EJECUTAR LA MIGRACIÓN ===
+    if (isset($_GET['migrar']) && $_GET['migrar'] == '1') {
+        try {
+            // Inicializar la consola de Laravel manualmente en este punto temprano
+           
+            $kernel = $app->make(\Illuminate\Contracts\Console\Kernel::class);
+            $status = $kernel->handle(
+                new \Symfony\Component\Console\Input\StringInput('migrate --force'),
+                new \Symfony\Component\Console\Output\BufferedOutput()
+            );
+            echo "¡Estructura de base de datos creada con éxito en PostgreSQL, mi señor! Código de salida: " . $status;
+            exit;
+        } catch (\Exception $e) {
+            echo "Error ejecutando la migración: " . $e->getMessage();
+            exit;
+        }
+    }
+    // =====================================================
 }
+
 
 
 use Illuminate\Foundation\Application;
