@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cita;
+use App\Models\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -62,6 +63,8 @@ class CitasController extends Controller
 
         $psicologa = Auth::guard('psicologa')->user();
 
+        $this->sincronizarPaciente($psicologa->id, $request->paciente_nombre, $request->paciente_telefono, $request->paciente_email);
+
         Cita::create([
             'psicologa_id' => $psicologa->id,
             'paciente_nombre' => $request->paciente_nombre,
@@ -105,7 +108,22 @@ class CitasController extends Controller
             'notas' => 'nullable|string',
         ]);
 
-        $cita->update($request->all());
+        $psicologa = Auth::guard('psicologa')->user();
+
+        $this->sincronizarPaciente($psicologa->id, $request->paciente_nombre, $request->paciente_telefono, $request->paciente_email);
+
+        $cita->update([
+            'paciente_nombre' => $request->paciente_nombre,
+            'paciente_telefono' => $request->paciente_telefono,
+            'paciente_email' => $request->paciente_email,
+            'fecha' => $request->fecha,
+            'hora_inicio' => $request->hora_inicio,
+            'hora_fin' => $request->hora_fin,
+            'tipo' => $request->tipo,
+            'estado' => $request->estado,
+            'motivo' => $request->motivo,
+            'notas' => $request->notas,
+        ]);
 
         return redirect()->route('citas.index')->with('success', 'Cita actualizada correctamente.');
     }
@@ -128,5 +146,26 @@ class CitasController extends Controller
         $cita->update(['estado' => $request->estado]);
 
         return back()->with('success', 'Estado actualizado a "' . $request->estado . '".');
+    }
+
+    private function sincronizarPaciente($psicologaId, $nombre, $telefono, $email)
+    {
+        $paciente = Paciente::where('psicologa_id', $psicologaId)
+            ->where('telefono', $telefono)
+            ->first();
+
+        if ($paciente) {
+            $paciente->update([
+                'nombre' => $nombre,
+                'email' => $email ?: $paciente->email,
+            ]);
+        } else {
+            Paciente::create([
+                'psicologa_id' => $psicologaId,
+                'nombre' => $nombre,
+                'telefono' => $telefono,
+                'email' => $email,
+            ]);
+        }
     }
 }

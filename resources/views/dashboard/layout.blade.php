@@ -46,7 +46,7 @@
                         <span class="icon"><i class="fas fa-calendar-alt"></i></span>
                         Calendario
                     </a>
-                    <a href="#" class="nav-item">
+                    <a href="{{ route('pacientes.index') }}" class="nav-item {{ request()->routeIs('pacientes*') ? 'active' : '' }}">
                         <span class="icon"><i class="fas fa-users"></i></span>
                         Pacientes
                     </a>

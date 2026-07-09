@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DisponibilidadController;
 use App\Http\Controllers\InstalacionController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PacientesController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('instalacion')->group(function () {
@@ -46,6 +47,15 @@ Route::middleware('auth.psicologa')->prefix('panel-psicologa')->group(function (
     Route::post('/calendario/citas', [CalendarioController::class, 'store'])->name('calendario.citas.store');
     Route::put('/calendario/citas/{id}', [CalendarioController::class, 'update'])->name('calendario.citas.update');
     Route::delete('/calendario/citas/{id}', [CalendarioController::class, 'destroy'])->name('calendario.citas.destroy');
+
+    Route::get('/pacientes', [PacientesController::class, 'index'])->name('pacientes.index');
+    Route::get('/pacientes/crear', [PacientesController::class, 'crear'])->name('pacientes.crear');
+    Route::post('/pacientes', [PacientesController::class, 'guardar'])->name('pacientes.guardar');
+    Route::get('/pacientes/{id}', [PacientesController::class, 'show'])->name('pacientes.show');
+    Route::get('/pacientes/{id}/editar', [PacientesController::class, 'editar'])->name('pacientes.editar');
+    Route::put('/pacientes/{id}', [PacientesController::class, 'actualizar'])->name('pacientes.actualizar');
+    Route::delete('/pacientes/{id}', [PacientesController::class, 'eliminar'])->name('pacientes.eliminar');
+    Route::get('/api/pacientes/buscar', [PacientesController::class, 'buscar'])->name('pacientes.buscar');
 
     Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
     Route::get('/blog/crear', [BlogController::class, 'crear'])->name('blog.crear');
