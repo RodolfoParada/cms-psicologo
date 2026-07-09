@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('titulo', 'Panel') — PsicoCMS</title>
     <link rel="stylesheet" href="{{ asset('dashboard/css/dashboard.css') }}">
     @php
@@ -37,9 +38,13 @@
                         <span class="icon"><i class="fas fa-chart-pie"></i></span>
                         Inicio
                     </a>
-                    <a href="{{ route('citas.index') }}" class="nav-item {{ request()->routeIs('citas*') ? 'active' : '' }}">
+                    <a href="{{ route('citas.index') }}" class="nav-item {{ request()->routeIs('citas*') && !request()->routeIs('calendario*') ? 'active' : '' }}">
                         <span class="icon"><i class="fas fa-calendar-check"></i></span>
                         Citas
+                    </a>
+                    <a href="{{ route('calendario.index') }}" class="nav-item {{ request()->routeIs('calendario*') ? 'active' : '' }}">
+                        <span class="icon"><i class="fas fa-calendar-alt"></i></span>
+                        Calendario
                     </a>
                     <a href="#" class="nav-item">
                         <span class="icon"><i class="fas fa-users"></i></span>

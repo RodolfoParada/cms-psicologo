@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CalendarioController;
 use App\Http\Controllers\CitasController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DisponibilidadController;
@@ -38,6 +39,11 @@ Route::middleware('auth.psicologa')->prefix('panel-psicologa')->group(function (
     Route::put('/citas/{id}', [CitasController::class, 'actualizar'])->name('citas.actualizar');
     Route::delete('/citas/{id}', [CitasController::class, 'eliminar'])->name('citas.eliminar');
     Route::post('/citas/{id}/estado', [CitasController::class, 'cambiarEstado'])->name('citas.estado');
+
+    Route::get('/calendario', [CalendarioController::class, 'index'])->name('calendario.index');
+    Route::post('/calendario/citas', [CalendarioController::class, 'store'])->name('calendario.citas.store');
+    Route::put('/calendario/citas/{id}', [CalendarioController::class, 'update'])->name('calendario.citas.update');
+    Route::delete('/calendario/citas/{id}', [CalendarioController::class, 'destroy'])->name('calendario.citas.destroy');
 
     Route::get('/disponibilidad', [DisponibilidadController::class, 'index'])->name('disponibilidad.index');
     Route::post('/disponibilidad/descanso', [DisponibilidadController::class, 'guardarDescanso'])->name('disponibilidad.descanso.guardar');
