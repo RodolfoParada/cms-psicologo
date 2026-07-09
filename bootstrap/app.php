@@ -1,4 +1,7 @@
 <?php
+if (isset($_SERVER['HTTP_HOST']) && str_contains($_SERVER['HTTP_HOST'], 'onrender.com')) {
+    \Illuminate\Support\Facades\Artisan::call('config:clear');
+}
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
