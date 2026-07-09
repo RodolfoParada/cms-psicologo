@@ -82,6 +82,7 @@
                         <a href="#" class="nav-item-child">Frases públicas</a>
                         <a href="#" class="nav-item-child">Redes sociales</a>
                         <a href="#" class="nav-item-child">Email y notificaciones</a>
+                        <a href="{{ route('proteccion-datos.index') }}" class="nav-item-child {{ request()->routeIs('proteccion-datos*') ? 'active' : '' }}">Protección de datos</a>
                         <a href="#" class="nav-item-child">Configuración web</a>
                     </div>
                 </div>

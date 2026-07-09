@@ -129,6 +129,9 @@
                 </div>
             </div>
             <div style="display:flex;gap:0.5rem;">
+                <a href="{{ route('proteccion-datos.paciente', $paciente->id) }}" class="btn-icono" title="Descargar protección de datos" style="color:#2563eb;" target="_blank">
+                    <i class="fas fa-file-pdf"></i>
+                </a>
                 <a href="{{ route('pacientes.editar', $paciente->id) }}" class="btn-icono" title="Editar paciente">
                     <i class="fas fa-edit"></i>
                 </a>

@@ -17,6 +17,7 @@ class ConfiguracionWeb extends Model
         'favicon',
         'meta_descripcion',
         'meta_keywords',
+        'plantilla_proteccion_datos',
         'google_maps_url',
         'mostrar_blog',
         'mostrar_faq',

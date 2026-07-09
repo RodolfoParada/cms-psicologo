@@ -10,6 +10,7 @@ use App\Http\Controllers\HistoriasController;
 use App\Http\Controllers\InstalacionController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PacientesController;
+use App\Http\Controllers\ProteccionDatosController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('instalacion')->group(function () {
@@ -57,6 +58,11 @@ Route::middleware('auth.psicologa')->prefix('panel-psicologa')->group(function (
     Route::put('/pacientes/{id}', [PacientesController::class, 'actualizar'])->name('pacientes.actualizar');
     Route::delete('/pacientes/{id}', [PacientesController::class, 'eliminar'])->name('pacientes.eliminar');
     Route::get('/api/pacientes/buscar', [PacientesController::class, 'buscar'])->name('pacientes.buscar');
+
+    Route::get('/proteccion-datos', [ProteccionDatosController::class, 'index'])->name('proteccion-datos.index');
+    Route::post('/proteccion-datos', [ProteccionDatosController::class, 'guardar'])->name('proteccion-datos.guardar');
+    Route::get('/proteccion-datos/descargar', [ProteccionDatosController::class, 'descargarPlantilla'])->name('proteccion-datos.descargar');
+    Route::get('/proteccion-datos/paciente/{id}', [ProteccionDatosController::class, 'descargarPaciente'])->name('proteccion-datos.paciente');
 
     Route::get('/historias', [HistoriasController::class, 'index'])->name('historias.index');
     Route::get('/historias/crear', [HistoriasController::class, 'crear'])->name('historias.crear');
