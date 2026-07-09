@@ -5,7 +5,7 @@ if (isset($_SERVER['HTTP_HOST']) && str_contains($_SERVER['HTTP_HOST'], 'onrende
     $_ENV['DB_PORT']       = '5432';
     $_ENV['DB_DATABASE']   = 'cms_db_77s9';
     $_ENV['DB_USERNAME']   = 'cms_db_77s9_user'; // <-- Escriba aquí su usuario real de Render
-    $_ENV['DB_PASSWORD']   = 'AQUÍ_COPIE_Y_PEGUE_SU_CONTRASEÑA_REAL_DE_RENDER'; // <-- Fijo aquí
+    $_ENV['DB_PASSWORD']   = 'Vj9rexGBdXYcuq0DYHaEOCqDHa3p0sm8'; // <-- Fijo aquí
     
     // Duplicar en $_SERVER para evitar fugas
     $_SERVER['DB_CONNECTION'] = 'pgsql';
