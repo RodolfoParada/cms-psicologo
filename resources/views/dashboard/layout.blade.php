@@ -50,7 +50,7 @@
                         <span class="icon"><i class="fas fa-users"></i></span>
                         Pacientes
                     </a>
-                    <a href="#" class="nav-item">
+                    <a href="{{ route('historias.index') }}" class="nav-item {{ request()->routeIs('historias*') ? 'active' : '' }}">
                         <span class="icon"><i class="fas fa-notes-medical"></i></span>
                         Historias clínicas
                     </a>

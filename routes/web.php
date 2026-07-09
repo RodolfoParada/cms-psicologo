@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoriaBlogController;
 use App\Http\Controllers\CitasController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DisponibilidadController;
+use App\Http\Controllers\HistoriasController;
 use App\Http\Controllers\InstalacionController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PacientesController;
@@ -56,6 +57,14 @@ Route::middleware('auth.psicologa')->prefix('panel-psicologa')->group(function (
     Route::put('/pacientes/{id}', [PacientesController::class, 'actualizar'])->name('pacientes.actualizar');
     Route::delete('/pacientes/{id}', [PacientesController::class, 'eliminar'])->name('pacientes.eliminar');
     Route::get('/api/pacientes/buscar', [PacientesController::class, 'buscar'])->name('pacientes.buscar');
+
+    Route::get('/historias', [HistoriasController::class, 'index'])->name('historias.index');
+    Route::get('/historias/crear', [HistoriasController::class, 'crear'])->name('historias.crear');
+    Route::post('/historias', [HistoriasController::class, 'guardar'])->name('historias.guardar');
+    Route::get('/historias/{id}/editar', [HistoriasController::class, 'editar'])->name('historias.editar');
+    Route::put('/historias/{id}', [HistoriasController::class, 'actualizar'])->name('historias.actualizar');
+    Route::delete('/historias/{id}', [HistoriasController::class, 'eliminar'])->name('historias.eliminar');
+    Route::get('/historias/archivo/{id}/eliminar', [HistoriasController::class, 'eliminarArchivo'])->name('historias.archivo.eliminar');
 
     Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
     Route::get('/blog/crear', [BlogController::class, 'crear'])->name('blog.crear');
